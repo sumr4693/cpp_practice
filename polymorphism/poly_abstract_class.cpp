@@ -1,4 +1,6 @@
 #include <iostream>
+// Dynamic memory management library
+#include <memory>
 
 using namespace std;
 
@@ -97,8 +99,43 @@ int main()
     // baseOp->show_operandB();
     // baseOp->show_result();
 
-    //TODO: base class pointer to derived class object in heap
-    //TODO: base class pointer (smart pointer) to derived class object in heap
+    // Wild pointer
+    basicOperations *baseOp2;
+    {
+        // Base class pointer to derived class object in heap
+        baseOp2 = new addOperation();
+        add_result = baseOp2->arithmetic_operation(-10,5);
+        cout << "Base class pointer to derived class object in heap" << endl;
+        cout << "Result: " << add_result << endl;
+    }
+
+    add_result = baseOp2->arithmetic_operation(-10,5);
+    cout << "Result outside the scope of memory allocation: " << add_result << endl;
+
+    // We will have memory leak if not deleted manually
+    delete baseOp2;
+
+    // Note: Will get segmentation fault (Core dumped) since we have freed the dynamic memory allocation
+    // baseOp2 doesn't point to anything after freeing memory - dangling pointer
+    // add_result = baseOp2->arithmetic_operation(-10,5);
+
+    // Base class pointer (smart pointer) to derived class object in heap with unique pointer
+    // Normal initialization with unique pointer - but we split it to understand the use of scope in smart pointers
+    // unique_ptr<basicOperations> addOp_uPtr(new addOperation());
+    unique_ptr<basicOperations> addOp_uPtr;
+    {
+		    addOp_uPtr = unique_ptr<addOperation>(new addOperation());
+        {
+			      add_result = addOp_uPtr->arithmetic_operation(50,40);
+						cout << "Result of unique pointer 1: " << add_result << endl;
+        }
+				// Forcefully freeing memory
+				//addOp_uPtr.reset();
+    }
+		// It should throw segmentation fault here, since the memory should have been automatically freed after the scope ended.
+		// To be continued...
+		add_result = addOp_uPtr->arithmetic_operation(50,40);
+		cout << "Result of unique pointer 1 outside the scope: " << add_result << endl;
 
     return 0;
 }
