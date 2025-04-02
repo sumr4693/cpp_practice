@@ -11,8 +11,12 @@ set(SOURCE
     ${CMAKE_SOURCE_DIR}/static_memfun.cpp
 )
 
+add_library(static_lib STATIC ${SOURCE})
+
 # Define the executable with source files
-add_executable(static_member_functions ${SOURCE} ${CMAKE_SOURCE_DIR}/main.cpp)
+add_executable(static_memfun ${CMAKE_SOURCE_DIR}/main.cpp)
+
+target_link_libraries(static_memfun static_lib)
 
 # Correct include directories (use the folder, not the header file)
-target_include_directories(static_member_functions PUBLIC ${CMAKE_SOURCE_DIR})
+target_include_directories(static_memfun PUBLIC ${CMAKE_SOURCE_DIR})
