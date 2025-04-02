@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+#include <chrono>
+
 #include "heap_sort.hpp"
 
 void print_vector(const std::vector<int>& v)
@@ -17,6 +19,8 @@ void print_vector(const std::vector<int>& v)
 
 int main()
 {
+    auto time_start = chrono::high_resolution_clock::now();
+
     std::vector<int> v {2, 10, 6, 3, 4, 1, 5, 8, 7};
 
     heap_sort<int> h_sort(v, "MAX_HEAP");
@@ -33,5 +37,13 @@ int main()
     std::cout << "Descending order:" << std::endl;
     print_vector(v2);
 
+    cout << v2[2] << std::endl;
+
+    auto time_end = chrono::high_resolution_clock::now();
+
+    auto duration = chrono::duration_cast<chrono::milliseconds>(time_end - time_start).count();
+
+    cout << "Execution time: " << duration << " ms" << endl;
+    
     return 0;
 }

@@ -1,7 +1,7 @@
 #include <algorithm>
 
 template <typename T>
-heap_sort<T>::heap_sort(std::vector<T> elements, std::string min_max)
+constexpr heap_sort<T>::heap_sort(const std::vector<T> elements, const std::string min_max)
  : elements_{elements},
    min_max_{min_max}
 {
@@ -83,7 +83,7 @@ void heap_sort<T>::max_heapify(int n, int index)
 }
 
 template <typename T>
-const std::vector<T>& heap_sort<T>::sort(void)
+constexpr const std::vector<T>& heap_sort<T>::sort(void)
 {
     int n = elements_.size();
 
@@ -99,4 +99,10 @@ const std::vector<T>& heap_sort<T>::sort(void)
     }
 
     return elements_;
+}
+
+template <typename T>
+const T& heap_sort<T>::operator[](int index)
+{
+    return elements_[index];
 }

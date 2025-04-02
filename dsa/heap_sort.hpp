@@ -13,9 +13,12 @@ public:
 
     heap_sort() = delete;
 
-    heap_sort(std::vector<T> elements, std::string min_max);
+    // constexpr constructor - evaluated at compile run with constant arguments
+    constexpr heap_sort(const std::vector<T> elements, const std::string min_max);
 
-    [[nodiscard]] const std::vector<T>& sort();
+    [[nodiscard]] constexpr const std::vector<T>& sort();
+
+    const T& operator[](int index);
 
 private:
 
