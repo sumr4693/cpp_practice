@@ -28,5 +28,20 @@ int main()
 
     printf("Endian type: %d\n", endian_t);
 
+    /* Different types of string initialization */
+    // char* str = "Hello";
+    // char* str = {'H','e','l','l','o','\0'};
+    // char str[] = "Hello";
+    // char str[15] = "Hello";
+    // char str[] = {'H','e','l','l','o','\0'};
+
+    const char* str = check_endian();
+    printf("Endianness - ");
+    puts(str);
+
+    convert_to_little_or_big_endian((uint32_t *const) &raw_data);
+
+    printf("Convert endian using builtin: %04x\n", convert_endian_using_builtin(raw_data));
+
     return 0;
 }

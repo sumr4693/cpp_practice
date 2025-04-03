@@ -91,28 +91,22 @@ void read_bytes_from_memory(uint8_t *const ptr, uint8_t no_of_bytes)
 
 ENDIANS_t get_endian_type(uint32_t *const ptr)
 {
-    size_t no_of_bytes = sizeof(uint32_t);
-
-    uint8_t data[no_of_bytes];
+    uint8_t* ptr_to_data = (uint8_t*) ptr;
     uint8_t ls_byte, ms_byte;
 
     ENDIANS_t endian_t = e_INVALID;
-
-    memset(data, 0x00, no_of_bytes);
-
-    memcpy(data, ptr, no_of_bytes);
 
     ls_byte = (uint8_t) (ptr[0] & PASS_LS_BYTE);
     ms_byte = (uint8_t) ((ptr[0] & PASS_MS_BYTE) >> 24);
 
     printf("Raw data: %04x\n", ptr[0]);
-    printf("data[0]: %01x, data[3]: %01x, ls_byte: %01x, ms_byte: %01x\n", data[0], data[3], ls_byte, ms_byte);
+    printf("data[0]: %01x, data[3]: %01x, ls_byte: %01x, ms_byte: %01x\n", ptr_to_data[0], ptr_to_data[3], ls_byte, ms_byte);
 
-    if (data[0] == ls_byte)
+    if (ptr_to_data[0] == ls_byte)
     {
         endian_t = e_LITTLE_ENDIAN;
     }
-    else if (data[0] == ms_byte)
+    else if (ptr_to_data[0] == ms_byte)
     {
         endian_t = e_BIG_ENDIAN;
     }
@@ -120,7 +114,37 @@ ENDIANS_t get_endian_type(uint32_t *const ptr)
     return endian_t;
 }
 
-// void convert_to_little_or_big_endian(uint32_t *const ptr, ENDIANS_t endian_t)
-// {
+const char* check_endian(void)
+{
+    uint32_t value = 1;
 
-// }
+    uint8_t* ptr = (uint8_t*) &value;
+
+    if (ptr[0] == value)
+    {
+        return "Little Endian";
+    }
+    else if (ptr[3] == value)
+    {
+        return "Big Endian";
+    }
+}
+
+void convert_to_little_or_big_endian(uint32_t *const ptr)
+{
+    uint32_t temp = *ptr;
+
+    printf("Before swapping: %04x\n", *ptr);
+
+    *ptr = (((temp >> 24) & 0x000000ff) |
+            ((temp >> 8) & 0x0000ff00) |
+            ((temp << 8) & 0x00ff0000) |
+            ((temp << 24) & 0xff000000));
+
+    printf("After swapping: %04x\n", *ptr);
+}
+
+uint32_t convert_endian_using_builtin(uint32_t value)
+{
+    return __builtin_bswap32(value);
+}

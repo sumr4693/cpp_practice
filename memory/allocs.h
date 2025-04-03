@@ -38,7 +38,9 @@ void read_data_from_memory(uint32_t *const ptr, uint8_t no_of_bytes);
 void read_bytes_from_memory(uint8_t *const ptr, uint8_t no_of_bytes);
 
 ENDIANS_t get_endian_type(uint32_t *const ptr);
-// void convert_to_little_or_big_endian(uint32_t *const ptr, ENDIANS_t endian_t);
+const char* check_endian(void);
+void convert_to_little_or_big_endian(uint32_t *const ptr);
+uint32_t convert_endian_using_builtin(uint32_t value);
 
 /* TODO: Add all the different pointer plays */
 
