@@ -137,7 +137,7 @@ void backtracking::place_n_queens(void)
     }
 }
 
-void backtracking::print_n_queens(void)
+void backtracking::print_n_queens_indices(void)
 {
     cout << "Printing N queens map" << endl;
     for (int i = 0; i < combination; i++)
@@ -149,4 +149,35 @@ void backtracking::print_n_queens(void)
         }
         cout << endl;
     }
+}
+
+vector<vector<string>> backtracking::print_n_queens(void)
+{
+    string row_str;
+    for (int i = 0; i < n_queens; i++)
+    {
+        row_str += ".";
+    }
+
+    vector<vector<string>> distinct_queen_positions {(size_t) combination, vector<string> {(size_t) n_queens, row_str}};
+
+    cout << "Printing N queens" << endl;
+    for (int i = 0; i < combination; i++)
+    {
+        for (int j = 0; j < n_queens_map[i].size(); j++)
+        {
+            distinct_queen_positions[i][j][n_queens_map[i][j]] = 'Q';
+        }
+    }
+
+    for (int i = 0; i < combination; i++)
+    {
+        for (int j = 0; j < n_queens; j++)
+        {
+            cout << distinct_queen_positions[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    return distinct_queen_positions;
 }

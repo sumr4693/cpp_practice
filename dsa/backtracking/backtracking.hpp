@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <string>
 
 using namespace std;
 
@@ -15,7 +16,8 @@ public:
 
     void place_n_queens_recursive(int r);
     void place_n_queens(void);
-    void print_n_queens(void);
+    void print_n_queens_indices(void);
+    vector<vector<string>> print_n_queens(void);
 
 private:
 
