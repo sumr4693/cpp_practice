@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "backtracking.hpp"
 
 backtracking::backtracking(int no_of_queens) 
@@ -8,6 +10,12 @@ backtracking::backtracking(int no_of_queens)
     {
         present_n_queens.push_back(-1);
     }
+}
+
+backtracking::backtracking(vector<int> candidates, int target)
+    : candidates{candidates}, target{target}
+{
+
 }
 
 /**
@@ -180,4 +188,78 @@ vector<vector<string>> backtracking::print_n_queens(void)
     }
 
     return distinct_queen_positions;
+}
+
+void backtracking::combination_sum_repetition_recursive(int start, int current_sum)
+{
+    if (current_sum == target)
+    {
+        if (find(combinations_for_target.begin(), combinations_for_target.end(), current_combination_for_target) == combinations_for_target.end())
+        {
+            combinations_for_target.push_back(current_combination_for_target);
+        }
+        return;
+    }
+
+    if (current_sum > target || start == candidates.size())
+    {
+        return;
+    }
+
+    // Skip the current candidate
+    combination_sum_repetition_recursive(start + 1, current_sum);
+
+    // Include the current candidate
+    current_combination_for_target.push_back(candidates[start]);
+    combination_sum_repetition_recursive(start, current_sum + candidates[start]);
+    current_combination_for_target.pop_back();
+}
+
+void backtracking::combination_sum_non_repetition_recursive(int start, int current_sum)
+{
+    if (current_sum == target)
+    {
+        if (find(combinations_for_target.begin(), combinations_for_target.end(), current_combination_for_target) == combinations_for_target.end())
+        {
+            combinations_for_target.push_back(current_combination_for_target);
+        }
+        return;
+    }
+
+    if (current_sum > target || start == candidates.size())
+    {
+        return;
+    }
+
+    // Skip the current candidate
+    combination_sum_non_repetition_recursive(start + 1, current_sum);
+
+    // Include the current candidate
+    if (find(current_combination_for_target.begin(), current_combination_for_target.end(), candidates[start]) != current_combination_for_target.end())
+    {
+        return;
+    }
+    current_combination_for_target.push_back(candidates[start]);
+    combination_sum_non_repetition_recursive(start, current_sum + candidates[start]);
+    current_combination_for_target.pop_back();
+}
+
+void backtracking::print_combinations_sum(void)
+{
+    cout << "Printing combinations sum: " << endl;
+    for (const auto& v : combinations_for_target)
+    {
+        cout << "[";
+        for (const auto& ele : v)
+        {
+            cout << ele << " ";
+        }
+        cout << "]" << endl;
+    }
+}
+
+void backtracking::reset_combinations_sum(void)
+{
+    combinations_for_target.clear();
+    current_combination_for_target.clear();
 }
