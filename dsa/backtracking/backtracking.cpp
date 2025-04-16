@@ -12,14 +12,23 @@ backtracking::backtracking(int no_of_queens)
     }
 }
 
-backtracking::backtracking(vector<int> candidates, int target)
-    : candidates{candidates}, target{target}
+backtracking::backtracking(vector<int> candidates_, int target_)
+    : candidates{candidates_}, target{target_}
 {
+    sort(candidates.begin(), candidates.end());
+}
 
+backtracking::backtracking(vector<int> candidates_)
+    : candidates{candidates_}
+{
+    sort(candidates.begin(), candidates.end());
 }
 
 /**
  * Algorithm is implemented from the source: https://jeffe.cs.illinois.edu/teaching/algorithms/book/02-backtracking.pdf
+ * Solves Leetcode 51 https://leetcode.com/problems/n-queens/
+ * Solves Leetcode 52 https://leetcode.com/problems/n-queens-ii
+ * 
  */
 void backtracking::place_n_queens_recursive(int r)
 {
@@ -145,20 +154,6 @@ void backtracking::place_n_queens(void)
     }
 }
 
-void backtracking::print_n_queens_indices(void)
-{
-    cout << "Printing N queens map" << endl;
-    for (int i = 0; i < combination; i++)
-    {
-        cout << "[" << i << "]: ";
-        for (const auto& e : n_queens_map[i])
-        {
-            cout << e << " ";
-        }
-        cout << endl;
-    }
-}
-
 vector<vector<string>> backtracking::print_n_queens(void)
 {
     string row_str;
@@ -190,6 +185,23 @@ vector<vector<string>> backtracking::print_n_queens(void)
     return distinct_queen_positions;
 }
 
+void backtracking::print_n_queens_indices(void)
+{
+    cout << "Printing N queens map" << endl;
+    for (int i = 0; i < combination; i++)
+    {
+        cout << "[" << i << "]: ";
+        for (const auto& e : n_queens_map[i])
+        {
+            cout << e << " ";
+        }
+        cout << endl;
+    }
+}
+
+/**
+ * Solves Leetcode 39 https://leetcode.com/problems/combination-sum/
+ */
 void backtracking::combination_sum_repetition_recursive(int start, int current_sum)
 {
     if (current_sum == target)
@@ -215,9 +227,13 @@ void backtracking::combination_sum_repetition_recursive(int start, int current_s
     current_combination_for_target.pop_back();
 }
 
-void backtracking::combination_sum_non_repetition_recursive(int start, int current_sum)
+/**
+ * Solves Leetcode 40 https://leetcode.com/problems/combination-sum-ii
+ * 
+ */
+void backtracking::combination_sum_non_repetition_recursive(int start, int target2)
 {
-    if (current_sum == target)
+    if (target2 == 0)
     {
         if (find(combinations_for_target.begin(), combinations_for_target.end(), current_combination_for_target) == combinations_for_target.end())
         {
@@ -225,23 +241,29 @@ void backtracking::combination_sum_non_repetition_recursive(int start, int curre
         }
         return;
     }
-
-    if (current_sum > target || start == candidates.size())
+    else if (target2 < 0)
     {
         return;
     }
 
-    // Skip the current candidate
-    combination_sum_non_repetition_recursive(start + 1, current_sum);
-
-    // Include the current candidate
-    if (find(current_combination_for_target.begin(), current_combination_for_target.end(), candidates[start]) != current_combination_for_target.end())
+    for (int i = start; i < candidates.size(); i++)
     {
-        return;
+        // Skip duplicates
+        if (i > start && candidates[i] == candidates[i-1])
+        {
+            continue;
+        }
+
+        // Prune
+        if (candidates[i] > target2)
+        {
+            break;
+        }
+
+        current_combination_for_target.push_back(candidates[i]);
+        combination_sum_non_repetition_recursive(i+1, target2 - candidates[i]);
+        current_combination_for_target.pop_back();
     }
-    current_combination_for_target.push_back(candidates[start]);
-    combination_sum_non_repetition_recursive(start, current_sum + candidates[start]);
-    current_combination_for_target.pop_back();
 }
 
 void backtracking::print_combinations_sum(void)

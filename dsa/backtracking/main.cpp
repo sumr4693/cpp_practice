@@ -18,9 +18,12 @@ int main(void)
     backtracking bt2 {{1,2,3,4,5,6,7}, 7};
     bt2.combination_sum_repetition_recursive(0,0);
     bt2.print_combinations_sum();
-    bt2.reset_combinations_sum();
-    bt2.combination_sum_non_repetition_recursive(0,0);
-    bt2.print_combinations_sum();
+
+    // backtracking bt3 {{10,1,2,7,6,1,5}};
+    // bt3.combination_sum_non_repetition_recursive(0,8);
+    backtracking bt3 {{1,2,3,4,5,6,7}};
+    bt3.combination_sum_non_repetition_recursive(0,7);
+    bt3.print_combinations_sum();
 
     return 0;
 }
