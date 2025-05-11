@@ -19,7 +19,7 @@ void print_vector(const std::vector<int>& v)
 
 int main()
 {
-    auto time_start = chrono::high_resolution_clock::now();
+    auto time_start = std::chrono::high_resolution_clock::now();
 
     std::vector<int> v {2, 10, 6, 3, 4, 1, 5, 8, 7};
 
@@ -37,13 +37,13 @@ int main()
     std::cout << "Descending order:" << std::endl;
     print_vector(v2);
 
-    cout << v2[2] << std::endl;
+    std::cout << v2[2] << std::endl;
 
-    auto time_end = chrono::high_resolution_clock::now();
+    auto time_end = std::chrono::high_resolution_clock::now();
 
-    auto duration = chrono::duration_cast<chrono::milliseconds>(time_end - time_start).count();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(time_end - time_start).count();
 
-    cout << "Execution time: " << duration << " ms" << endl;
+    std::cout << "Execution time: " << duration << " ms" << std::endl;
     
     return 0;
 }

@@ -5,7 +5,7 @@
 #include <string>
 #include <functional>
 
-using namespace std;
+#include "util.hpp"
 
 enum class heap_type
 {
@@ -32,11 +32,7 @@ private:
     std::vector<T> elements_;
     heap_type min_max_;
 
-    void min_heapify(int n, int index);
-
-    void max_heapify(int n, int index);
-
-    std::function<void(int,int)> heapify_callback;
+    std::function<void(std::vector<T>&, int, int)> heapify_callback;
 };
 
 #include "heap_sort.tcc"
