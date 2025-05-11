@@ -1,22 +1,17 @@
 #include <algorithm>
 
 template <typename T>
-constexpr heap_sort<T>::heap_sort(const std::vector<T> elements, const std::string min_max)
+constexpr heap_sort<T>::heap_sort(const std::vector<T> elements, const heap_type min_max)
  : elements_{elements},
    min_max_{min_max}
 {
-}
-
-template <typename T>
-void heap_sort<T>::heapify(int n, int index)
-{
-    if (min_max_ == "MIN_HEAP")
+    if (min_max_ == heap_type::MIN_HEAP)
     {
-        min_heapify(n,index);
+        heapify_callback = [this](int n, int index) { min_heapify(n, index); };
     }
-    else if (min_max_ == "MAX_HEAP")
+    else if(min_max_ == heap_type::MAX_HEAP)
     {
-        max_heapify(n,index);
+        heapify_callback = [this](int n, int index) { max_heapify(n, index); };
     }
     else
     {
@@ -89,13 +84,13 @@ constexpr const std::vector<T>& heap_sort<T>::sort(void)
 
     for (int i = n / 2 - 1; i >= 0; i--)
     {
-        heapify(n, i);
+        heapify_callback(n, i);
     }
 
     for (int i = n - 1; i > 0; i--)
     {
         std::swap(elements_[0], elements_[i]);
-        heapify(i, 0);
+        heapify_callback(i, 0);
     }
 
     return elements_;
