@@ -1,6 +1,6 @@
 #include <algorithm>
 
-template <typename T>
+template <numbers_only T>
 constexpr heap_sort<T>::heap_sort(const std::vector<T> elements, const heap_type min_max)
  : elements_{elements},
    min_max_{min_max}
@@ -19,7 +19,7 @@ constexpr heap_sort<T>::heap_sort(const std::vector<T> elements, const heap_type
     }
 }
 
-template <typename T>
+template <numbers_only T>
 constexpr const std::vector<T>& heap_sort<T>::sort(void)
 {
     int n = elements_.size();
@@ -38,7 +38,7 @@ constexpr const std::vector<T>& heap_sort<T>::sort(void)
     return elements_;
 }
 
-template <typename T>
+template <numbers_only T>
 const T& heap_sort<T>::operator[](int index)
 {
     return elements_[index];

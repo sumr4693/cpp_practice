@@ -22,6 +22,8 @@ int main()
     auto time_start = std::chrono::high_resolution_clock::now();
 
     std::vector<int> v {2, 10, 6, 3, 4, 1, 5, 8, 7};
+    // std::vector<std::string> s = {"Hi", "Hello"}; // Doesn't work, throws compiler error
+    // std::vector<float> v {2.1, 10.2, 6.5, 3.7, 4.8, 1.0, 5.0, 8.0, 7.0}; //Works
 
     heap_sort<int> h_sort(v, heap_type::MAX_HEAP);
 

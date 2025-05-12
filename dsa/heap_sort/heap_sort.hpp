@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <functional>
+#include <concepts>
 
 #include "util.hpp"
 
@@ -14,6 +15,9 @@ enum class heap_type
 };
 
 template <typename T>
+concept numbers_only = std::same_as<T, int> || std::same_as<T, float> || std::same_as<T, double>;
+
+template<numbers_only T>
 class heap_sort {
 
 public:
