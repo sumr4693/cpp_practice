@@ -1,15 +1,15 @@
 #include <algorithm>
 
 template <numbers_only T>
-constexpr heap_sort<T>::heap_sort(const std::vector<T> elements, const heap_type min_max)
+constexpr heap_sort<T>::heap_sort(const std::vector<T> elements, const util::heap::heap_type min_max)
  : elements_{elements},
    min_max_{min_max}
 {
-    if (min_max_ == heap_type::MIN_HEAP)
+    if (min_max_ == util::heap::heap_type::MIN_HEAP)
     {
         heapify_callback = [this](std::vector<T>& items, int n, int index) { util::heap::min_heapify<T>(items, n, index); };
     }
-    else if(min_max_ == heap_type::MAX_HEAP)
+    else if(min_max_ == util::heap::heap_type::MAX_HEAP)
     {
         heapify_callback = [this](std::vector<T>& items, int n, int index) { util::heap::max_heapify<T>(items, n, index); };
     }
