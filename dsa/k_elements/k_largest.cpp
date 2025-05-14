@@ -10,7 +10,10 @@ int k_largest::find_k_largest()
 {
     size_t n = list_.size();
 
-    util::heap::min_heapify(list_, k_count_, 0);
+    for (auto i = (k_count_ / 2) - 1; i >= 0; i--)
+    {
+        util::heap::min_heapify(list_, k_count_, i);
+    }
 
     for (size_t i = k_count_; i < n; i++)
     {
