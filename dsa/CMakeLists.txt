@@ -3,3 +3,4 @@ project(dsa)
 
 add_subdirectory(heap_sort)
 add_subdirectory(k_elements)
+add_subdirectory(linked_list)

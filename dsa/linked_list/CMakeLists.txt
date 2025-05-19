@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10.0)
-project(k_elements)
+project(linked_list)
 
 set(CMAKE_C_COMPILER gcc)
 set(CMAKE_CXX_COMPILER g++)
@@ -13,13 +13,8 @@ else()
     set(EXE_NAME ${PROJECT_NAME})
 endif()
 
-add_library(kth_largest STATIC ${CMAKE_CURRENT_SOURCE_DIR}/k_largest.cpp)
-target_include_directories(kth_largest PUBLIC ${CMAKE_SOURCE_DIR}/utility)
-
 # Define the executable with source files
 add_executable(${EXE_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
-
-target_link_libraries(${EXE_NAME} kth_largest)
 
 # Correct include directories (use the folder, not the header file)
 target_include_directories(${EXE_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

@@ -1,0 +1,32 @@
+#pragma once
+
+#include <iostream>
+#include <memory>
+
+#include "singly_linked_list.hpp"
+
+template <typename T>
+class Bidirectional_Node final : public Node {
+public:
+    std::unique_ptr<Node> prev;
+
+    Bidirectional_Node(T val) : Node(val), prev{nullptr}
+    {}
+};
+
+template <typename T>
+class doubly_linked_list final : public linked_list {
+public:
+    doubly_linked_list() = default;
+    doubly_linked_list(T root);
+
+    void insert_value(T value) override;
+    void remove_value(T value) override;
+    void traverse_list() override;
+    void reverse_list() override;
+
+private:
+    std::shared_ptr<Bidirectional_Node<T>> head;
+
+    void create_node(T value);
+};
