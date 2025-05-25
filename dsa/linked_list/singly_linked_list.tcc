@@ -28,24 +28,30 @@ void linked_list<T>::insert_value(T value)
 template <typename T>
 void linked_list<T>::remove_value(T target)
 {
+    /* This function assumes that the linked list has repeated target values and attempts to remove them all */
+    
     std::cout << "Remove function invoked, searching for target: " << target << std::endl;
 
     // If target is the head
     if (head->data == target)
     {
         head = std::move(head->next);
-        return;
     }
 
     // If target is the tail
     if (tail->data == target)
     {
-        tail->next = nullptr;
-        return;
+        tail = std::move(nullptr);
     }
 
     Node<T>* current = head.get();
 
+    // current is of Node<T>* type, whereas current->next is of unique_ptr<Node<T>> type
+    // So, cannot move from current->next to current
+    // That is why, checking for current->next's data and removing it (if matches) by moving current->next->next to current->next
+    // Since both of them has unique_ptr<Node<T>> types
+    // Also, what if head->data is the target?
+    // That's why we have head->data that is checked above, since current->data is not checked here
     while (current && current->next)
     {
         if (current->next->data == target)
