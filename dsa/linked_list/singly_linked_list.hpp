@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 
+namespace linked_list_nm {
 template <typename T>
 class Node {
 public:
@@ -12,6 +13,8 @@ public:
     Node(T val) : data{val}, next{nullptr}
     {}
 };
+
+}
 
 template <typename T>
 class linked_list
@@ -26,8 +29,8 @@ public:
     virtual void reverse_list();
 
 private:
-    std::unique_ptr<Node<T>> head;
-    Node<T>* tail;
+    std::unique_ptr<linked_list_nm::Node<T>> head;
+    linked_list_nm::Node<T>* tail;
 
     void create_node(T value);
 };

@@ -9,12 +9,12 @@ void linked_list<T>::create_node(T value)
 {
     if (head == nullptr)
     {
-        head = std::make_unique<Node<T>>(value);
+        head = std::make_unique<linked_list_nm::Node<T>>(value);
         tail = head.get();
     }
     else
     {
-        tail->next = std::make_unique<Node<T>>(value);
+        tail->next = std::make_unique<linked_list_nm::Node<T>>(value);
         tail = tail->next.get();
     }
 }
@@ -44,7 +44,7 @@ void linked_list<T>::remove_value(T target)
         tail = std::move(nullptr);
     }
 
-    Node<T>* current = head.get();
+    linked_list_nm::Node<T>* current = head.get();
 
     // current is of Node<T>* type, whereas current->next is of unique_ptr<Node<T>> type
     // So, cannot move from current->next to current
@@ -73,7 +73,7 @@ void linked_list<T>::remove_value(T target)
 template <typename T>
 void linked_list<T>::traverse_list()
 {
-    Node<T>* current = head.get();
+    linked_list_nm::Node<T>* current = head.get();
 
     if (current == nullptr)
     {
@@ -96,8 +96,8 @@ void linked_list<T>::traverse_list()
 template <typename T>
 void linked_list<T>::reverse_list()
 {
-    std::unique_ptr<Node<T>> previous = nullptr;
-    std::unique_ptr<Node<T>> current = nullptr;
+    std::unique_ptr<linked_list_nm::Node<T>> previous = nullptr;
+    std::unique_ptr<linked_list_nm::Node<T>> current = nullptr;
 
     if (head.get() == nullptr)
     {
