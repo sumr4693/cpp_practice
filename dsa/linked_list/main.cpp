@@ -4,6 +4,7 @@
 int main()
 {
     // Cpp singly linked list
+    std::cout << "CPP Singly linked list with unique pointers testing" << std::endl;
     linked_list<int> sll{1};
     sll.insert_value(2);
     sll.insert_value(3);
@@ -45,6 +46,12 @@ int main()
     {
         printf("Match for 3 is not found\n");
     }
+
+    insert_node(&head, 7);
+    insert_node(&head, 10);
+
+    reverse_list(&head);
+    traverse_nodes(head);
 
     destroy_list(&head);
 

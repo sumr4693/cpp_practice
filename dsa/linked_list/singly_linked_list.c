@@ -134,6 +134,35 @@ void traverse_nodes(const Node* head)
 }
 
 /**
+ * @brief Reverses the linked list in place.
+ * @param head Pointer to the head pointer of the list (Node**).
+ * @note Modifies the list by reversing the order of nodes.
+ */
+void reverse_list(Node** head)
+{
+    if (*head == NULL)
+    {
+        printf("List is empty, nothing to reverse\n");
+        return;
+    }
+    else
+    {
+        Node* current = NULL;
+        Node* prev = NULL;
+
+        while (*head)
+        {
+            current = *head;
+            *head = current->next;
+            current->next = prev;
+            prev = current;
+        }
+
+        *head = prev;
+    }
+}
+
+/**
  * @brief Removes all nodes with the specified target value from the list.
  * @param head Pointer to the head pointer of the list (Node**).
  * @param target The value to remove from the list.
