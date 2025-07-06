@@ -7,11 +7,23 @@ constexpr heap_sort<T>::heap_sort(const std::vector<T> elements, const util::hea
 {
     if (min_max_ == util::heap::heap_type::MIN_HEAP)
     {
-        heapify_callback = [this](std::vector<T>& items, int n, int index) { util::heap::min_heapify<T>(items, n, index); };
+        // Lambda alternative (used here):
+        heapify_callback = [](std::vector<T>& items, int n, int index) { util::heap::min_heapify<T>(items, n, index); };
+
+        // Function pointer alternative (if min_heapify is static or free function):
+        // heapify_callback = &util::heap::min_heapify<T>;
+
+        // Functor alternative:
+        // struct MinHeapifyFunctor {
+        //     void operator()(std::vector<T>& items, int n, int index) const {
+        //         util::heap::min_heapify<T>(items, n, index);
+        //     }
+        // };
+        // heapify_callback = MinHeapifyFunctor();
     }
     else if(min_max_ == util::heap::heap_type::MAX_HEAP)
     {
-        heapify_callback = [this](std::vector<T>& items, int n, int index) { util::heap::max_heapify<T>(items, n, index); };
+        heapify_callback = [](std::vector<T>& items, int n, int index) { util::heap::max_heapify<T>(items, n, index); };
     }
     else
     {
